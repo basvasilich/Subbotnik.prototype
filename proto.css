@@ -1,0 +1,62 @@
+.b-grid-item_new
+{
+    opacity: .5;
+}
+
+.b-grid-item_uploading
+{
+    opacity: 1;
+    -moz-transition-property: opacity;
+}
+
+.b-grid-item__progress
+{
+    text-align: left;
+    width: 70%;
+    height: 8px;
+    line-height: 8px;
+    background-color: rgba(1,1,1, 0.05);
+    box-shadow: inset 0 1px 1px  rgba(1,1,1, 0.2);
+    display: -moz-inline-box;
+    display: inline-block;
+}
+
+.b-grid-item__progress__i
+{
+    line-height: 8px;
+    width: 1%;
+    display: -moz-inline-box;
+    display: inline-block;
+    height: 8px;
+    background-color: #5C729A;
+
+}
+
+.b-grid-item_uploading.b-grid-item_0,
+.b-grid-item_uploading.b-grid-item_0 .b-grid-item__progress__i
+{
+    -moz-transition-duration: 5s;
+    -moz-transition-delay: .1s;
+}
+
+.b-grid-item_uploading.b-grid-item_1,
+.b-grid-item_uploading.b-grid-item_1 .b-grid-item__progress__i
+{
+    -moz-transition-duration: 2s;
+    -moz-transition-delay: .5s;
+}
+
+.b-grid-item_uploading.b-grid-item_2,
+.b-grid-item_uploading.b-grid-item_2 .b-grid-item__progress__i
+{
+    -moz-transition-duration: 10s;
+    -moz-transition-delay: 1s;
+}
+
+
+.b-grid-item_uploading .b-grid-item__progress__i
+{
+    -moz-transition-property: width;
+    width: 100%;
+}
+
