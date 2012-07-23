@@ -6,32 +6,28 @@ requirejs([
         'text!../blocks/b-grid-item/b-grid-item.hbs',
         'handlebars'
     ],
-    function (hbsFile) {
+    function (hbsGridItem) {
         $(function () {
             window.App = {}
 
-            App.hbsFile = hbsFile
+            App.hbsGridItem = hbsGridItem
             App.dropbox = $('.b-grid_drop-place');
             App.fileCounter = 0
 
             App.onDrop = function (evt) {
-                evt.preventDefault();
-                evt.stopPropagation();
-
                 var files = [];
                 var inputFiles = evt.originalEvent.dataTransfer.files
 
                 $(inputFiles).each(function () {
                     var icon = this.type.split('/').pop()
                     files.push({
-                        id:App.fileCounter,
+                        num: App.fileCounter,
                         name:this.name,
-                        size:this.size,
                         icon:icon
                     })
                     App.fileCounter++
                 })
-                var fileTemplate = Handlebars.compile(App.hbsFile);
+                var fileTemplate = Handlebars.compile(App.hbsGridItem);
                 var html = fileTemplate({files:files})
                 $(html).prependTo(App.dropbox)
                 App.fileCounter = 0;
@@ -50,6 +46,9 @@ requirejs([
         });
 
         $("body").delegate(App.dropbox, "drop", function (evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
+
             App.onDrop(evt)
         });
     });
