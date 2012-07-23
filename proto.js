@@ -3,7 +3,7 @@ requirejs.config({
 });
 
 requirejs([
-        'text!../blocks/file.hbs',
+        'text!../blocks/b-grid-item/b-grid-item.hbs',
         'handlebars'
     ],
     function (hbsFile) {
