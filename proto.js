@@ -1,54 +1,58 @@
 requirejs.config({
-    baseUrl:'libs'
-});
+    baseUrl: 'libs'
+})
 
 requirejs([
-        'text!../blocks/b-grid-item/b-grid-item.hbs',
-        'handlebars'
-    ],
-    function (hbsGridItem) {
-        $(function () {
-            window.App = {}
+    'text!../blocks/file.hbs',
+    'handlebars'
+], function(hbsFile){
+    $(function(){
+        window.App = {}
+        App.hbsFile = hbsFile
+        App.dropBox = $('.b-grid_drop-place');
+        App.fileCounter = 0;
 
-            App.hbsGridItem = hbsGridItem
-            App.dropbox = $('.b-grid_drop-place');
+        App.onDrop = function(evt){
+            var files = [];
+            var inputFiles = evt.originalEvent.dataTransfer.files
+
+            $(inputFiles).each(function(){
+                var icon = this.type.split('/').pop()
+                files.push({
+                    name: this.name,
+                    icon: icon,
+                    num: App.fileCounter
+                })
+                App.fileCounter++
+
+            })
             App.fileCounter = 0
 
-            App.onDrop = function (evt) {
-                var files = [];
-                var inputFiles = evt.originalEvent.dataTransfer.files
+            var template = Handlebars.compile(App.hbsFile)
+            var html = template({files: files})
 
-                $(inputFiles).each(function () {
-                    var icon = this.type.split('/').pop()
-                    files.push({
-                        num: App.fileCounter,
-                        name:this.name,
-                        icon:icon
-                    })
-                    App.fileCounter++
-                })
-                var fileTemplate = Handlebars.compile(App.hbsGridItem);
-                var html = fileTemplate({files:files})
-                $(html).prependTo(App.dropbox)
-                App.fileCounter = 0;
+            $(html).prependTo(App.dropBox);
 
-                setTimeout("$('.b-grid-item_new').addClass('b-grid-item_uploading')", 500)
+            setTimeout("$('.b-grid-item_new').addClass('b-grid-item_uploading')", 500)
 
-                $('.b-grid-item__progress').on("transitionend", function (evt) {
-                    $(this).hide();
-                })
-            }
+            $('.b-grid-item__progress').on('transitionend', function(){
+                $(this).hide();
+            })
+
+        }
+
+        $('body').delegate(App.dropBox, 'dragenter, dragover', function(evt){
+            evt.preventDefault();
+            evt.stopPropagation();
         })
 
-        $("body").delegate(App.dropbox, "dragenter, dragover", function (evt) {
-            evt.preventDefault();
-            evt.stopPropagation();
-        });
-
-        $("body").delegate(App.dropbox, "drop", function (evt) {
+        $('body').delegate(App.dropBox, 'drop', function(evt){
             evt.preventDefault();
             evt.stopPropagation();
 
-            App.onDrop(evt)
-        });
-    });
+            App.onDrop(evt);
+        })
+
+    })
+
+})
