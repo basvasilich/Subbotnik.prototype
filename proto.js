@@ -33,7 +33,7 @@ requirejs([
 
             $(html).prependTo(App.dropBox);
 
-            setTimeout("$('.b-grid-item_new').addClass('b-grid-item_uploading')", 500)
+            setTimeout("$('.b-grid-item_new').addClass('b-grid-item_uploading')", 200)
 
             $('.b-grid-item__progress').on('transitionend', function(){
                 $(this).hide();
